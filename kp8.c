@@ -89,17 +89,26 @@ void Delete(list* root, int index) {
         prev_el = curr_el;
         curr_el = curr_el->next;
     }
+    list* tek;
+    tek = curr_el;
     prev_el->next = curr_el->next;
+    free(tek);
 }
 
 list* Clear_list(list* root, movie_genres val) {
     list* curr = root;
+    list* tek;
     int fl = 0;
     while (curr->value != Finish) {
         if (curr->value == val) fl = 1;
+
         curr = curr->next;
     }
-    if (fl) root = curr;
+    while (fl && root->value != Finish) {
+        tek = root;
+        root = root->next;
+        free(tek);
+    }
     return root;
 }
 
@@ -119,8 +128,8 @@ int main() {
         elem->value = ConvertString(symbol);
         Insert(root, i, elem);
     }
-    //Delete(root, 1);
-    root = Clear_list(root, Action);
+    Delete(root, 1);
+    root = Clear_list(root, Western);
     PrText(root);
     putchar('\n');
     return 0;
